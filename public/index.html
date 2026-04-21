@@ -209,8 +209,8 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
       <span class="app-wordmark">Verify</span>
     </div>
     <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('fr')" id="btn-fr">Français</button>
-      <button class="lang-btn" onclick="setLang('en')" id="btn-en">English</button>
+      <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">Français</button>
+      <button class="lang-btn active" onclick="setLang('en')" id="btn-en">English</button>
     </div>
     <h1 class="w-title" id="w-title">C'est <span>vraiment</span><br>vrai ?</h1>
     <p class="w-sub" id="w-sub">Collez n'importe quelle affirmation lue en ligne. Nous cherchons dans les sources fiables et vous donnons un verdict clair en quelques secondes.</p>
@@ -289,12 +289,12 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
 /* ── Language system ── */
 const T = {
   fr: {
-    wTitle: 'C\'est <span>vraiment</span><br>vrai ?',
-    wSub: 'Collez n\'importe quelle affirmation lue en ligne. Nous cherchons dans les sources fiables et vous donnons un verdict clair en quelques secondes.',
-    wCta: 'Vérifier une affirmation',
+    wTitle: 'Qu\'est-ce qui est <span>réellement</span><br>vrai ?',
+    wSub: 'Collez n\'importe quelle information lue en ligne. Nous cherchons dans les sources fiables et vous donnons un verdict clair en quelques secondes.',
+    wCta: 'Vérifier une information',
     wPillsLbl: 'Sources approuvées',
     wFoot: 'Basé sur les preuves · Résultats en ~20 secondes',
-    pgTitle: 'Quelle est l\'affirmation ?',
+    pgTitle: 'Quelle est l\'information ?',
     pgSub: 'Tapez, collez ou dites quelque chose que vous avez lu en ligne.',
     taPlaceholder: 'Ex. : Boire de l\'eau citronnée guérit le cancer…',
     verifyBtn: 'Vérifier',
@@ -305,7 +305,7 @@ const T = {
       'Einstein a échoué en maths quand il était enfant',
       'Les États-Unis ont lancé une bombe nucléaire sur l\'Iran'
     ],
-    steps: ['Lecture de l\'affirmation…', 'Recherche dans les sources fiables…', 'Comparaison des preuves…', 'Construction du verdict…'],
+    steps: ['Lecture de l\'information…', 'Recherche dans les sources fiables…', 'Comparaison des preuves…', 'Construction du verdict…'],
     backTxt: 'Retour',
     newBtn: '+ Nouveau',
     claimVerified: 'Affirmation vérifiée',
@@ -316,12 +316,12 @@ const T = {
     sourcesTitle: 'Sources',
     readMore: 'Lire plus',
     showLess: 'Réduire',
-    notInSources: 'Cette affirmation n\'est pas couverte par notre liste de sources approuvées.',
+    notInSources: 'Cette information n\'est pas couverte par notre liste de sources approuvées.',
     noteFooter: 'WHO · CDC · NHS · PubMed · Reuters · BBC · NYT · Guardian · Bloomberg · FT · ONU · UE · Banque Mondiale · OCDE · Our World in Data · SEC',
     verdicts: { TRUE: '✓ Vrai', FALSE: '✗ Faux', PARTIALLY_FALSE: '⚡ Partiellement faux', UNVERIFIED: '? Non vérifié', NOT_IN_SOURCES: '— Hors sources' },
     cats: { health:'Santé', science:'Science', history:'Histoire', politics:'Politique', economics:'Économie', technology:'Technologie', other:'Général' },
     errTitle: 'Une erreur est survenue',
-    voiceHint: 'Écoute… parlez votre affirmation',
+    voiceHint: 'Écoute… parlez votre information',
     voiceErr: 'Impossible de vous entendre — réessayez',
     voiceUnsupported: 'Voix non supportée dans ce navigateur',
     micLang: 'fr-FR',
@@ -370,7 +370,7 @@ const T = {
   }
 };
 
-let lang = 'fr';
+let lang = 'en';
 
 function setLang(l) {
   lang = l;
@@ -558,7 +558,7 @@ function sec(title, body) { return '<div class="r-sec"><div class="r-sec-hdr" on
 
 /* ── Init ── */
 buildExamples();
-setLang('fr');
+setLang('en');
 </script>
 </body>
 </html>
