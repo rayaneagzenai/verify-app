@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Verify">
-<link rel="apple-touch-icon" href="/icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
-<title>Verify</title>
+<title>Verify — Vérificateur de faits</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="/icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -49,12 +49,19 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);-webk
 .pill{padding:5px 12px;background:var(--card);border:1px solid var(--line);border-radius:100px;font-size:11px;font-weight:500;color:var(--ink2)}
 .w-foot{font-size:12px;color:var(--ink3);font-weight:300}
 
+/* LANG TOGGLE */
+.lang-toggle{display:flex;align-items:center;gap:6px;margin-bottom:24px;justify-content:center}
+.lang-btn{padding:5px 14px;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--line);background:transparent;color:var(--ink3);transition:all .15s}
+.lang-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+
 /* TOPBAR */
 .topbar{width:100%;padding:15px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(242,244,248,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);position:sticky;top:0;z-index:10;flex-shrink:0}
 @media(prefers-color-scheme:dark){.topbar,.res-topbar{background:rgba(15,19,32,.94)}}
 .tb-logo{display:flex;align-items:center;gap:8px;cursor:pointer}
 .tb-name{font-size:16px;font-weight:700;color:var(--brand);letter-spacing:-.01em}
 .tb-hint{font-size:12px;color:var(--ink3);font-weight:400}
+.tb-lang{font-size:12px;font-weight:600;color:var(--ink3);cursor:pointer;padding:5px 10px;border-radius:100px;border:1.5px solid var(--line);background:transparent;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.tb-lang:hover{border-color:var(--brand);color:var(--brand)}
 
 /* INPUT */
 #p2{background:var(--bg)}
@@ -104,19 +111,16 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
 .new-btn{padding:8px 17px;background:var(--brand);color:#fff;border:none;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;touch-action:manipulation}
 .res-body{width:100%;max-width:540px;margin:0 auto;padding:20px 22px 80px;display:flex;flex-direction:column;gap:12px}
 
-/* Animated items */
 .anim-item{opacity:0;transform:translateY(16px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
 .anim-item.in{opacity:1;transform:translateY(0)}
 .badge-wrap{opacity:0;transform:scale(.6);transition:opacity .3s var(--ease),transform .3s cubic-bezier(.34,1.56,.64,1)}
 .badge-wrap.slam{opacity:1;transform:scale(1)}
 
-/* Claim card */
 .r-claim{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:18px 20px}
 .r-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px}
 .r-claim-txt{font-size:18px;font-weight:500;color:var(--ink);line-height:1.45;letter-spacing:-.01em}
 .r-cat{display:inline-block;margin-top:10px;padding:4px 11px;background:var(--bg);border-radius:100px;font-size:11px;font-weight:500;color:var(--ink2)}
 
-/* Verdict */
 .r-verdict{border-radius:20px;padding:20px;border:1.5px solid var(--brand-border);background:var(--brand-light)}
 .v-badge{display:inline-flex;padding:5px 15px;border-radius:100px;font-size:13px;font-weight:700;margin-bottom:11px;background:var(--brand);color:#fff;letter-spacing:-.01em}
 .v-badge.un,.v-badge.nis{background:var(--ink3)}
@@ -130,7 +134,6 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
 .conf-fill{height:100%;border-radius:100px;background:var(--brand);width:0%;transition:width .9s var(--ease)}
 .conf-fill.un,.conf-fill.nis{background:var(--ink3)}
 
-/* Breakdown */
 .r-breakdown{display:flex;flex-direction:column;gap:8px}
 .bd{padding:12px 14px;border-radius:12px}
 .bd.t{background:#EDF7F1;border-left:3px solid #3DAA6A}
@@ -141,7 +144,6 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
 @media(prefers-color-scheme:dark){.bd.t .bd-lbl{color:#6DCB90}.bd.f .bd-lbl{color:#F08080}}
 .bd-txt{font-size:14px;line-height:1.65;font-weight:300;color:var(--ink)}
 
-/* Sections */
 .r-sec{background:var(--card);border:1.5px solid var(--line);border-radius:20px;overflow:hidden}
 .r-sec-hdr{padding:15px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;touch-action:manipulation;transition:background .15s}
 .r-sec-hdr:hover{background:var(--bg)}
@@ -150,7 +152,6 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
 .r-sec-body{padding:4px 20px 18px;border-top:1px solid var(--line)}
 .r-sec-body.hide{display:none}
 
-/* Sources */
 .src-list{display:flex;flex-direction:column;gap:10px;padding-top:13px}
 .src{background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:13px;transition:border-color .2s}
 .src.expanded{border-color:var(--brand)}
@@ -192,8 +193,6 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
 .r-err-ico{font-size:28px;margin-bottom:9px}
 .r-err-ttl{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:7px}
 .r-err-txt{font-size:14px;color:var(--ink2);line-height:1.6;font-weight:300}
-
-/* Toast */
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--brand);color:#fff;padding:11px 22px;border-radius:100px;font-size:14px;font-weight:500;opacity:0;transition:all .3s var(--ease);z-index:100;white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -209,14 +208,18 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
       <div class="logo-box lg"><svg viewBox="0 0 24 24"><path d="M12 3L4 7v5c0 5.55 3.84 10.74 8 12C16.16 22.74 20 17.55 20 12V7L12 3z"/><polyline points="9 12 11 14 15 10"/></svg></div>
       <span class="app-wordmark">Verify</span>
     </div>
-    <h1 class="w-title">What's <span>actually</span><br>true?</h1>
-    <p class="w-sub">Paste any claim you read online. We search trusted sources and give you a clear verdict in seconds.</p>
-    <button class="cta" onclick="go(2)">Check a claim <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-    <div class="pills-lbl">Approved sources</div>
-    <div class="pills">
-      <span class="pill">WHO</span><span class="pill">CDC</span><span class="pill">NHS</span><span class="pill">PubMed</span><span class="pill">Mayo Clinic</span><span class="pill">Reuters</span><span class="pill">BBC News</span><span class="pill">New York Times</span><span class="pill">The Guardian</span><span class="pill">Bloomberg</span><span class="pill">Financial Times</span><span class="pill">UN</span><span class="pill">EU</span><span class="pill">World Bank</span><span class="pill">OECD</span><span class="pill">Eurostat</span><span class="pill">Our World in Data</span><span class="pill">SEC</span>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('fr')" id="btn-fr">Français</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">English</button>
     </div>
-    <p class="w-foot">Evidence-based · Results in ~20 seconds</p>
+    <h1 class="w-title" id="w-title">C'est <span>vraiment</span><br>vrai ?</h1>
+    <p class="w-sub" id="w-sub">Collez n'importe quelle affirmation lue en ligne. Nous cherchons dans les sources fiables et vous donnons un verdict clair en quelques secondes.</p>
+    <button class="cta" onclick="go(2)" id="w-cta">Vérifier une affirmation <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    <div class="pills-lbl" id="w-pills-lbl">Sources approuvées</div>
+    <div class="pills">
+      <span class="pill">WHO</span><span class="pill">CDC</span><span class="pill">NHS</span><span class="pill">PubMed</span><span class="pill">Mayo Clinic</span><span class="pill">Reuters</span><span class="pill">BBC News</span><span class="pill">New York Times</span><span class="pill">The Guardian</span><span class="pill">Bloomberg</span><span class="pill">Financial Times</span><span class="pill">ONU</span><span class="pill">UE</span><span class="pill">Banque Mondiale</span><span class="pill">OCDE</span><span class="pill">Eurostat</span><span class="pill">Our World in Data</span><span class="pill">SEC</span>
+    </div>
+    <p class="w-foot" id="w-foot">Basé sur les preuves · Résultats en ~20 secondes</p>
   </div>
 </div>
 
@@ -227,32 +230,27 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
       <div class="logo-box sm"><svg viewBox="0 0 24 24"><path d="M12 3L4 7v5c0 5.55 3.84 10.74 8 12C16.16 22.74 20 17.55 20 12V7L12 3z"/><polyline points="9 12 11 14 15 10"/></svg></div>
       <span class="tb-name">Verify</span>
     </div>
-    <span class="tb-hint">Fact checking</span>
+    <button class="tb-lang" onclick="toggleLang()" id="tb-lang-btn">EN</button>
   </div>
   <div class="input-wrap">
-    <h2 class="pg-title">What's the claim?</h2>
-    <p class="pg-sub">Type, paste, or speak something you read online.</p>
+    <h2 class="pg-title" id="pg-title">Quelle est l'affirmation ?</h2>
+    <p class="pg-sub" id="pg-sub">Tapez, collez ou dites quelque chose que vous avez lu en ligne.</p>
     <div class="shell">
-      <textarea id="ta" placeholder="e.g. Drinking lemon water cures cancer…" maxlength="600" oninput="document.getElementById('cc').textContent=this.value.length"></textarea>
+      <textarea id="ta" maxlength="600" oninput="document.getElementById('cc').textContent=this.value.length"></textarea>
       <div class="shell-foot">
         <span class="ccnt"><span id="cc">0</span> / 600</span>
         <button class="mic-btn" id="micBtn" onclick="toggleVoice()">
           <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
         </button>
-        <button class="vbtn" onclick="verify()">
+        <button class="vbtn" onclick="verify()" id="verify-btn">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          Verify
+          <span id="verify-btn-txt">Vérifier</span>
         </button>
       </div>
     </div>
     <div class="voice-hint" id="voiceHint"></div>
-    <div class="ex-lbl">Try an example</div>
-    <div class="ex-list">
-      <button class="ex-btn" onclick="fill('The Great Wall of China is visible from space with the naked eye')">The Great Wall of China is visible from space with the naked eye</button>
-      <button class="ex-btn" onclick="fill('Vaccines cause autism according to multiple studies')">Vaccines cause autism according to multiple studies</button>
-      <button class="ex-btn" onclick="fill('Einstein failed math class as a child')">Einstein failed math class as a child</button>
-      <button class="ex-btn" onclick="fill('The US launched a nuclear bomb on Iran')">The US launched a nuclear bomb on Iran</button>
-    </div>
+    <div class="ex-lbl" id="ex-lbl">Essayez un exemple</div>
+    <div class="ex-list" id="ex-list"></div>
   </div>
 </div>
 
@@ -261,12 +259,12 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
   <div class="load-wrap">
     <div class="ring"></div>
     <div class="l-claim" id="lc"></div>
-    <div class="l-status" id="ls">Searching trusted sources…</div>
+    <div class="l-status" id="ls"></div>
     <div class="steps">
-      <div class="step" id="s1"><span class="dot"></span>Reading the claim</div>
-      <div class="step" id="s2"><span class="dot"></span>Searching trusted sources</div>
-      <div class="step" id="s3"><span class="dot"></span>Comparing evidence</div>
-      <div class="step" id="s4"><span class="dot"></span>Building verdict</div>
+      <div class="step" id="s1"><span class="dot"></span><span id="s1t"></span></div>
+      <div class="step" id="s2"><span class="dot"></span><span id="s2t"></span></div>
+      <div class="step" id="s3"><span class="dot"></span><span id="s3t"></span></div>
+      <div class="step" id="s4"><span class="dot"></span><span id="s4t"></span></div>
     </div>
   </div>
 </div>
@@ -276,20 +274,137 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
   <div class="res-topbar">
     <button class="back-btn" onclick="go(2)">
       <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      Back
+      <span id="back-txt">Retour</span>
     </button>
     <div class="tb-logo" onclick="go(1)" style="cursor:pointer">
       <div class="logo-box sm"><svg viewBox="0 0 24 24"><path d="M12 3L4 7v5c0 5.55 3.84 10.74 8 12C16.16 22.74 20 17.55 20 12V7L12 3z"/><polyline points="9 12 11 14 15 10"/></svg></div>
       <span class="tb-name">Verify</span>
     </div>
-    <button class="new-btn" onclick="go(2)">+ New</button>
+    <button class="new-btn" onclick="go(2)" id="new-btn">+ Nouveau</button>
   </div>
   <div class="res-body" id="rb"></div>
 </div>
 
 <script>
-let cur = 'p1', lastResult = null;
+/* ── Language system ── */
+const T = {
+  fr: {
+    wTitle: 'C\'est <span>vraiment</span><br>vrai ?',
+    wSub: 'Collez n\'importe quelle affirmation lue en ligne. Nous cherchons dans les sources fiables et vous donnons un verdict clair en quelques secondes.',
+    wCta: 'Vérifier une affirmation',
+    wPillsLbl: 'Sources approuvées',
+    wFoot: 'Basé sur les preuves · Résultats en ~20 secondes',
+    pgTitle: 'Quelle est l\'affirmation ?',
+    pgSub: 'Tapez, collez ou dites quelque chose que vous avez lu en ligne.',
+    taPlaceholder: 'Ex. : Boire de l\'eau citronnée guérit le cancer…',
+    verifyBtn: 'Vérifier',
+    exLbl: 'Essayez un exemple',
+    examples: [
+      'La Grande Muraille de Chine est visible depuis l\'espace à l\'œil nu',
+      'Les vaccins causent l\'autisme selon plusieurs études',
+      'Einstein a échoué en maths quand il était enfant',
+      'Les États-Unis ont lancé une bombe nucléaire sur l\'Iran'
+    ],
+    steps: ['Lecture de l\'affirmation…', 'Recherche dans les sources fiables…', 'Comparaison des preuves…', 'Construction du verdict…'],
+    backTxt: 'Retour',
+    newBtn: '+ Nouveau',
+    claimVerified: 'Affirmation vérifiée',
+    confidence: 'Confiance',
+    breakdownTitle: 'Décryptage',
+    whatTrue: '✓ Ce qui est exact',
+    whatFalse: '✗ Ce qui est faux',
+    sourcesTitle: 'Sources',
+    readMore: 'Lire plus',
+    showLess: 'Réduire',
+    notInSources: 'Cette affirmation n\'est pas couverte par notre liste de sources approuvées.',
+    noteFooter: 'WHO · CDC · NHS · PubMed · Reuters · BBC · NYT · Guardian · Bloomberg · FT · ONU · UE · Banque Mondiale · OCDE · Our World in Data · SEC',
+    verdicts: { TRUE: '✓ Vrai', FALSE: '✗ Faux', PARTIALLY_FALSE: '⚡ Partiellement faux', UNVERIFIED: '? Non vérifié', NOT_IN_SOURCES: '— Hors sources' },
+    cats: { health:'Santé', science:'Science', history:'Histoire', politics:'Politique', economics:'Économie', technology:'Technologie', other:'Général' },
+    errTitle: 'Une erreur est survenue',
+    voiceHint: 'Écoute… parlez votre affirmation',
+    voiceErr: 'Impossible de vous entendre — réessayez',
+    voiceUnsupported: 'Voix non supportée dans ce navigateur',
+    micLang: 'fr-FR',
+    tbLangSwitch: 'EN',
+    highConf: 'Élevée', medConf: 'Moyenne', lowConf: 'Faible',
+  },
+  en: {
+    wTitle: 'What\'s <span>actually</span><br>true?',
+    wSub: 'Paste any claim you read online. We search trusted sources and give you a clear verdict in seconds.',
+    wCta: 'Check a claim',
+    wPillsLbl: 'Approved sources',
+    wFoot: 'Evidence-based · Results in ~20 seconds',
+    pgTitle: 'What\'s the claim?',
+    pgSub: 'Type, paste, or speak something you read online.',
+    taPlaceholder: 'e.g. Drinking lemon water cures cancer…',
+    verifyBtn: 'Verify',
+    exLbl: 'Try an example',
+    examples: [
+      'The Great Wall of China is visible from space with the naked eye',
+      'Vaccines cause autism according to multiple studies',
+      'Einstein failed math class as a child',
+      'The US launched a nuclear bomb on Iran'
+    ],
+    steps: ['Reading the claim…', 'Searching trusted sources…', 'Comparing evidence…', 'Building verdict…'],
+    backTxt: 'Back',
+    newBtn: '+ New',
+    claimVerified: 'Claim verified',
+    confidence: 'Confidence',
+    breakdownTitle: 'Breaking it down',
+    whatTrue: '✓ What\'s accurate',
+    whatFalse: '✗ What\'s wrong',
+    sourcesTitle: 'Sources',
+    readMore: 'Read more',
+    showLess: 'Show less',
+    notInSources: 'This claim isn\'t covered by our approved source list.',
+    noteFooter: 'WHO · CDC · NHS · PubMed · Reuters · BBC · NYT · Guardian · Bloomberg · FT · UN · EU · World Bank · OECD · Our World in Data · SEC',
+    verdicts: { TRUE: '✓ True', FALSE: '✗ False', PARTIALLY_FALSE: '⚡ Partially false', UNVERIFIED: '? Unverified', NOT_IN_SOURCES: '— Not in sources' },
+    cats: { health:'Health', science:'Science', history:'History', politics:'Politics', economics:'Economics', technology:'Technology', other:'General' },
+    errTitle: 'Something went wrong',
+    voiceHint: 'Listening… speak your claim',
+    voiceErr: 'Could not hear you — try again',
+    voiceUnsupported: 'Voice not supported in this browser',
+    micLang: 'en-US',
+    tbLangSwitch: 'FR',
+    highConf: 'High', medConf: 'Medium', lowConf: 'Low',
+  }
+};
 
+let lang = 'fr';
+
+function setLang(l) {
+  lang = l;
+  const t = T[l];
+  document.getElementById('w-title').innerHTML = t.wTitle;
+  document.getElementById('w-sub').textContent = t.wSub;
+  document.getElementById('w-cta').childNodes[0].textContent = t.wCta + ' ';
+  document.getElementById('w-pills-lbl').textContent = t.wPillsLbl;
+  document.getElementById('w-foot').textContent = t.wFoot;
+  document.getElementById('pg-title').textContent = t.pgTitle;
+  document.getElementById('pg-sub').textContent = t.pgSub;
+  document.getElementById('ta').placeholder = t.taPlaceholder;
+  document.getElementById('verify-btn-txt').textContent = t.verifyBtn;
+  document.getElementById('ex-lbl').textContent = t.exLbl;
+  document.getElementById('back-txt').textContent = t.backTxt;
+  document.getElementById('new-btn').textContent = t.newBtn;
+  document.getElementById('tb-lang-btn').textContent = t.tbLangSwitch;
+  document.getElementById('btn-fr').classList.toggle('active', l === 'fr');
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  buildExamples();
+}
+
+function toggleLang() { setLang(lang === 'fr' ? 'en' : 'fr'); }
+
+function buildExamples() {
+  const t = T[lang];
+  const el = document.getElementById('ex-list');
+  el.innerHTML = t.examples.map(e =>
+    '<button class="ex-btn" onclick="fill(\'' + e.replace(/'/g, "\\'") + '\')">' + e + '</button>'
+  ).join('');
+}
+
+/* ── Navigation ── */
+let cur = 'p1', lastResult = null;
 function go(n) {
   const id = 'p' + n;
   if (id === cur) return;
@@ -299,51 +414,49 @@ function go(n) {
   next.classList.add('active'); next.scrollTop = 0; cur = id;
 }
 
-function fill(t) {
-  document.getElementById('ta').value = t;
-  document.getElementById('cc').textContent = t.length;
-}
+function fill(t) { document.getElementById('ta').value = t; document.getElementById('cc').textContent = t.length; }
 
-/* Voice */
+/* ── Voice ── */
 let recognition = null, isListening = false;
 function toggleVoice() {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { showToast('Voice not supported in this browser'); return; }
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { showToast(T[lang].voiceUnsupported); return; }
   isListening ? stopVoice() : startVoice();
 }
 function startVoice() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SR(); recognition.lang = 'en-US'; recognition.continuous = false; recognition.interimResults = true;
-  recognition.onstart = () => { isListening = true; document.getElementById('micBtn').classList.add('listening'); document.getElementById('voiceHint').textContent = 'Listening… speak your claim'; };
+  recognition = new SR(); recognition.lang = T[lang].micLang; recognition.continuous = false; recognition.interimResults = true;
+  recognition.onstart = () => { isListening = true; document.getElementById('micBtn').classList.add('listening'); document.getElementById('voiceHint').textContent = T[lang].voiceHint; };
   recognition.onresult = (e) => { let t = ''; for (let i = e.resultIndex; i < e.results.length; i++) t += e.results[i][0].transcript; document.getElementById('ta').value = t; document.getElementById('cc').textContent = t.length; };
   recognition.onend = () => { isListening = false; document.getElementById('micBtn').classList.remove('listening'); document.getElementById('voiceHint').textContent = ''; };
-  recognition.onerror = (e) => { isListening = false; document.getElementById('micBtn').classList.remove('listening'); document.getElementById('voiceHint').textContent = ''; if (e.error !== 'aborted') showToast('Could not hear you — try again'); };
+  recognition.onerror = (e) => { isListening = false; document.getElementById('micBtn').classList.remove('listening'); document.getElementById('voiceHint').textContent = ''; if (e.error !== 'aborted') showToast(T[lang].voiceErr); };
   recognition.start();
 }
 function stopVoice() { if (recognition) recognition.stop(); }
 
-/* Steps */
+/* ── Steps ── */
 const SID = ['s1','s2','s3','s4'];
-const SMSG = ['Reading the claim…','Searching trusted sources…','Comparing evidence…','Building verdict…'];
 let st, si;
 function startSteps() {
   SID.forEach(id => { const e = document.getElementById(id); e.classList.remove('go','done'); });
+  const steps = T[lang].steps;
+  SID.forEach((id, i) => { document.getElementById(id + 't').textContent = steps[i].replace('…',''); });
   si = 0;
   function tick() {
     if (si > 0) { const p = document.getElementById(SID[si-1]); p.classList.remove('go'); p.classList.add('done'); }
-    if (si < SID.length) { document.getElementById(SID[si]).classList.add('go'); document.getElementById('ls').textContent = SMSG[si]; si++; st = setTimeout(tick, 3800); }
+    if (si < SID.length) { document.getElementById(SID[si]).classList.add('go'); document.getElementById('ls').textContent = T[lang].steps[si]; si++; st = setTimeout(tick, 3800); }
   }
   tick();
 }
 
-/* Verify */
+/* ── Verify ── */
 async function verify() {
   if (isListening) stopVoice();
   const claim = document.getElementById('ta').value.trim();
-  if (!claim || claim.length < 5) { alert('Please enter a claim to verify.'); return; }
+  if (!claim || claim.length < 5) { alert(lang === 'fr' ? 'Veuillez entrer une affirmation à vérifier.' : 'Please enter a claim to verify.'); return; }
   document.getElementById('lc').textContent = '"' + claim + '"';
   go(3); startSteps();
   try {
-    const res = await fetch('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ claim }) });
+    const res = await fetch('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ claim, lang }) });
     clearTimeout(st);
     if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Server error'); }
     const data = await res.json();
@@ -353,12 +466,12 @@ async function verify() {
     animateResult();
   } catch(e) {
     clearTimeout(st);
-    document.getElementById('rb').innerHTML = '<div class="r-err"><div class="r-err-ico">⚠️</div><div class="r-err-ttl">Something went wrong</div><div class="r-err-txt">' + h(e.message) + '</div></div>';
+    document.getElementById('rb').innerHTML = '<div class="r-err"><div class="r-err-ico">⚠️</div><div class="r-err-ttl">' + T[lang].errTitle + '</div><div class="r-err-txt">' + h(e.message) + '</div></div>';
     go(4);
   }
 }
 
-/* Animated reveal */
+/* ── Animated reveal ── */
 function animateResult() {
   const el = document.getElementById('rb');
   el.scrollTop = 0;
@@ -371,18 +484,19 @@ function animateResult() {
   setTimeout(() => { if (fill) fill.style.width = pct + '%'; }, 500);
 }
 
-/* Build result */
+/* ── Build result ── */
 function buildResult(d) {
+  const t = T[lang];
   const cls = VC[d.verdict] || 'un';
-  const CAT = { health:'Health', science:'Science', history:'History', politics:'Politics', economics:'Economics', technology:'Technology', other:'General' };
   const pct = d.confidence === 'High' ? 92 : d.confidence === 'Medium' ? 58 : 28;
+  const confLabel = d.confidence === 'High' ? t.highConf : d.confidence === 'Medium' ? t.medConf : t.lowConf;
 
   let breakdown = '';
   if (d.verdict === 'PARTIALLY_FALSE' && (d.whatIsTrue || d.whatIsFalse)) {
-    breakdown = '<div class="anim-item">' + sec('Breaking it down',
+    breakdown = '<div class="anim-item">' + sec(t.breakdownTitle,
       '<div class="r-breakdown" style="padding-top:13px">' +
-      (d.whatIsTrue ? '<div class="bd t"><div class="bd-lbl">✓ What\'s accurate</div><div class="bd-txt">' + h(d.whatIsTrue) + '</div></div>' : '') +
-      (d.whatIsFalse ? '<div class="bd f"><div class="bd-lbl">✗ What\'s wrong</div><div class="bd-txt">' + h(d.whatIsFalse) + '</div></div>' : '') +
+      (d.whatIsTrue ? '<div class="bd t"><div class="bd-lbl">' + t.whatTrue + '</div><div class="bd-txt">' + h(d.whatIsTrue) + '</div></div>' : '') +
+      (d.whatIsFalse ? '<div class="bd f"><div class="bd-lbl">' + t.whatFalse + '</div><div class="bd-txt">' + h(d.whatIsFalse) + '</div></div>' : '') +
       '</div>') + '</div>';
   }
 
@@ -399,29 +513,29 @@ function buildResult(d) {
         '<div class="reliability"><div class="rel-label">' + tierLabel(tier) + '</div><div class="rel-track"><div class="rel-fill ' + tier + '"></div></div></div></div></div>' +
         (s.title ? '<div class="sc-title">' + h(s.title) + '</div>' : '') +
         '<div class="sc-exc">' + h(s.excerpt || '') + '</div>' +
-        (hasPreview ? '<div class="sc-preview" id="' + previewId + '"><div class="sc-preview-lbl">Full excerpt</div><div class="sc-preview-txt">' + h(s.excerpt) + '</div>' + (s.quote ? '<div class="sc-quote" style="margin-top:10px">"' + h(s.quote) + '"</div>' : '') + '</div>' : '') +
+        (hasPreview ? '<div class="sc-preview" id="' + previewId + '"><div class="sc-preview-lbl">Extrait complet</div><div class="sc-preview-txt">' + h(s.excerpt) + '</div>' + (s.quote ? '<div class="sc-quote" style="margin-top:10px">"' + h(s.quote) + '"</div>' : '') + '</div>' : '') +
         '<div class="sc-foot">' +
-        (hasPreview ? '<span class="sc-toggle" onclick="togglePreview(\'' + srcId + '\',\'' + previewId + '\',this)">Read more</span>' : '<span></span>') +
-        '<a class="sc-link" href="' + h(s.url) + '" target="_blank" rel="noopener">Open ↗</a></div></div>';
+        (hasPreview ? '<span class="sc-toggle" onclick="togglePreview(\'' + srcId + '\',\'' + previewId + '\',this)">' + t.readMore + '</span>' : '<span></span>') +
+        '<a class="sc-link" href="' + h(s.url) + '" target="_blank" rel="noopener">Ouvrir ↗</a></div></div>';
     }).join('');
-    sources = '<div class="anim-item">' + sec('Sources (' + d.sources.length + ')', '<div class="src-list">' + cards + '</div>') + '</div>';
+    sources = '<div class="anim-item">' + sec(t.sourcesTitle + ' (' + d.sources.length + ')', '<div class="src-list">' + cards + '</div>') + '</div>';
   }
 
   document.getElementById('rb').innerHTML =
-    '<div class="anim-item"><div class="r-claim"><div class="r-lbl">Claim verified</div><div class="r-claim-txt">' + h(d.claim) + '</div><span class="r-cat">' + h(CAT[d.category] || 'General') + '</span></div></div>' +
-    '<div class="anim-item"><div class="r-verdict ' + cls + '"><div class="badge-wrap"><div class="v-badge ' + cls + '">' + (VL[d.verdict] || '?') + '</div></div><div class="v-summary">' + h(d.summary) + '</div><div class="conf-meter"><div class="conf-row"><span class="conf-label">Confidence</span><span class="conf-val">' + h(d.confidence || '—') + '</span></div><div class="conf-track"><div class="conf-fill ' + cls + '" data-pct="' + pct + '" style="width:0%"></div></div></div></div></div>' +
+    '<div class="anim-item"><div class="r-claim"><div class="r-lbl">' + t.claimVerified + '</div><div class="r-claim-txt">' + h(d.claim) + '</div><span class="r-cat">' + h(t.cats[d.category] || 'Général') + '</span></div></div>' +
+    '<div class="anim-item"><div class="r-verdict ' + cls + '"><div class="badge-wrap"><div class="v-badge ' + cls + '">' + (t.verdicts[d.verdict] || '?') + '</div></div><div class="v-summary">' + h(d.summary) + '</div><div class="conf-meter"><div class="conf-row"><span class="conf-label">' + t.confidence + '</span><span class="conf-val">' + confLabel + '</span></div><div class="conf-track"><div class="conf-fill ' + cls + '" data-pct="' + pct + '" style="width:0%"></div></div></div></div></div>' +
     breakdown + sources +
-    (d.verdict === 'NOT_IN_SOURCES' ? '<div class="anim-item"><div class="r-note">This claim isn\'t covered by our approved source list.</div></div>' : '') +
-    '<div class="anim-item"><div class="r-note">WHO · CDC · NHS · PubMed · Reuters · BBC · NYT · Guardian · Bloomberg · FT · UN · EU · World Bank · OECD · Our World in Data · SEC</div></div>';
+    (d.verdict === 'NOT_IN_SOURCES' ? '<div class="anim-item"><div class="r-note">' + t.notInSources + '</div></div>' : '') +
+    '<div class="anim-item"><div class="r-note">' + t.noteFooter + '</div></div>';
 }
 
 function togglePreview(srcId, previewId, btn) {
   const src = document.getElementById(srcId);
   const expanded = src.classList.toggle('expanded');
-  btn.textContent = expanded ? 'Show less' : 'Read more';
+  btn.textContent = expanded ? T[lang].showLess : T[lang].readMore;
 }
 
-/* Toast */
+/* ── Toast ── */
 let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -430,19 +544,21 @@ function showToast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-/* Reliability */
+/* ── Reliability ── */
 const TIER1 = ['Reuters','World Health Organization','WHO','Centers for Disease Control','CDC','National Health Service','NHS','PubMed','Mayo Clinic','World Bank','OECD','Eurostat','U.S. Census Bureau','Our World in Data','SEC','United Nations','UN','European Union','EU','Bloomberg','Financial Times'];
 const TIER2 = ['BBC News','BBC','New York Times','The Guardian'];
 function getTier(n) { if (TIER1.some(t => n.includes(t))) return 'tier1'; if (TIER2.some(t => n.includes(t))) return 'tier2'; return 'tier3'; }
-function tierLabel(t) { return { tier1:'Primary source', tier2:'Trusted reporting', tier3:'Secondary' }[t]; }
+function tierLabel(t) { return { tier1: lang === 'fr' ? 'Source primaire' : 'Primary source', tier2: lang === 'fr' ? 'Presse fiable' : 'Trusted reporting', tier3: lang === 'fr' ? 'Secondaire' : 'Secondary' }[t]; }
 
 const VC = { TRUE:'true', FALSE:'false', PARTIALLY_FALSE:'partial', UNVERIFIED:'un', NOT_IN_SOURCES:'nis' };
-const VL = { TRUE:'✓ True', FALSE:'✗ False', PARTIALLY_FALSE:'⚡ Partially false', UNVERIFIED:'? Unverified', NOT_IN_SOURCES:'— Not in sources' };
 const TC = { primary:'primary', 'fact-check':'fact-check', research:'research', reporting:'reporting' };
-
 function h(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function tog(el) { const b = el.nextElementSibling, c = el.querySelector('.chev'); b.classList.toggle('hide'); c.style.transform = b.classList.contains('hide') ? 'rotate(-90deg)' : ''; }
 function sec(title, body) { return '<div class="r-sec"><div class="r-sec-hdr" onclick="tog(this)"><span class="r-sec-ttl">' + h(title) + '</span><span class="chev">▼</span></div><div class="r-sec-body">' + body + '</div></div>'; }
+
+/* ── Init ── */
+buildExamples();
+setLang('fr');
 </script>
 </body>
 </html>

@@ -10,9 +10,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 let API_KEY = process.env.ANTHROPIC_API_KEY || '';
 
 app.post('/api/verify', async (req, res) => {
-  const { claim } = req.body;
+  const { claim, lang } = req.body;
   if (!claim) return res.status(400).json({ error: 'No claim provided' });
   if (!API_KEY) return res.status(500).json({ error: 'No API key set.' });
+
+  const isFrench = lang === 'fr';
 
   try {
     const fetch = (...args) => import('node-fetch').then(({ default: f }) => f(...args));
@@ -31,8 +33,10 @@ app.post('/api/verify', async (req, res) => {
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
         system: `You are Verify, a strict fact-checking engine. Search the web and fact-check the claim using ONLY these approved sources: Reuters, WHO, CDC, NHS, PubMed, Mayo Clinic, World Bank, OECD, Eurostat, US Census Bureau, Our World in Data, SEC, Bloomberg, Financial Times, BBC News, New York Times, The Guardian, United Nations, European Union.
 
+${isFrench ? 'IMPORTANT: Respond entirely in French. The summary, whatIsTrue, whatIsFalse, and source excerpts must all be in French.' : 'Respond in English.'}
+
 Return ONLY a valid JSON object, no markdown, no backticks, no extra text:
-{"claim":"...","category":"health|science|history|politics|economics|technology|other","verdict":"TRUE|FALSE|PARTIALLY_FALSE|UNVERIFIED|NOT_IN_SOURCES","confidence":"High|Medium|Low","summary":"2 sentences what sources say","whatIsTrue":"only if PARTIALLY_FALSE else empty","whatIsFalse":"only if PARTIALLY_FALSE else empty","sources":[{"name":"...","type":"primary|fact-check|research|reporting","title":"...","url":"https://...","date":"...","excerpt":"1 sentence","quote":"short quote or empty"}]}
+{"claim":"...","category":"health|science|history|politics|economics|technology|other","verdict":"TRUE|FALSE|PARTIALLY_FALSE|UNVERIFIED|NOT_IN_SOURCES","confidence":"High|Medium|Low","summary":"2 sentences","whatIsTrue":"only if PARTIALLY_FALSE else empty","whatIsFalse":"only if PARTIALLY_FALSE else empty","sources":[{"name":"...","type":"primary|fact-check|research|reporting","title":"...","url":"https://...","date":"...","excerpt":"1 sentence","quote":"short quote or empty"}]}
 
 Rules: search 2-3 times, only cite approved sources, verdict=NOT_IN_SOURCES if not covered, never fabricate quotes.`,
         messages: [{ role: 'user', content: `Fact-check: "${claim}"` }]
